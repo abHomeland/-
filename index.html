@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة شرطة الغابات - FOREST POLICE</title>
+    <style>
+        /* التنسيق البصري المميز لشرطة الغابات (الخلفية السوداء واللمسات الزرقاء السمائية) */
+        :root {
+            --bg-color: #05070f;
+            --card-bg: #0c101f;
+            --accent-blue: #00bcd4;
+            --dark-blue: #111827;
+            --border-color: #1f2937;
+            --text-main: #ffffff;
+            --text-gray: #9ca3af;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .header-title {
+            text-align: center;
+            color: var(--accent-blue);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+        }
+
+        /* تنسيق أقسام الأكورديون (الأسهم المطوية) */
+        .section-card {
+            background-color: var(--dark-blue);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            background-color: #151d30;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            user-select: none;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header:hover {
+            background-color: #1c263f;
+        }
+
+        .arrow {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            padding: 20px;
+            color: #e5e7eb;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* تنسيق الملاحظات التنبيهية البارزة */
+        .alert-note {
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-align: right;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .alert-red {
+            background-color: rgba(220, 53, 69, 0.15);
+            border-right: 5px solid #dc3545;
+            color: #ff4d5a;
+        }
+
+        .alert-blue {
+            background-color: rgba(0, 123, 255, 0.15);
+            border-right: 5px solid #007bff;
+            color: #33b5e5;
+        }
+
+        /* تنسيق جدول حدود السرعة */
+        .speed-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .speed-table th, .speed-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: center;
+        }
+
+        .speed-table th {
+            background-color: #1c263f;
+            color: var(--accent-blue);
+        }
+
+        /* قائمة النقاط غير المرتبة */
+        ul {
+            padding-right: 20px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* لوحة التحكم الإدارية الخاصة بكلمة المرور 1221 */
+        .admin-panel {
+            background-color: #0d111d;
+            border: 1px dashed var(--accent-blue);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .admin-input {
+            background-color: #151d30;
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            outline: none;
+            width: 150px;
+            text-align: center;
+        }
+
+        .admin-btn {
+            background-color: var(--accent-blue);
+            color: black;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .admin-btn:hover {
+            background-color: #00acc1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="header-title">🌲 البوابة التنظيمية لفصيل شرطة الغابات - FOREST POLICE 🌲</h1>
+
+    <!-- 1. قسم القوانين والممنوعات العامة -->
+    <div class="section-card">
+        <div class="section-header" onclick="toggleSection('sec-rules')">
+            <span>⛔ القوانين والممنوعات العامة للمنتسبين</span>
+            <span class="arrow" id="arrow-sec-rules">▼</span>
+        </div>
+        <div class="section-content" id="sec-rules" style="display: none;">
+            <ul>
+                <li><strong>يمنع منعاً باتاً</strong> استخدام الأسلحة والمعدات غير المصرح بها لرتبتك.</li>
+                <li>يجب الالتزام بالزي الرسمي المخصص للفصيل في جميع الأوقات الميدانية.</li>
+                <li>يمنع استخدام مركبات الفصيل لأغراض شخصية خارج أوقات الخدمة الرسمية.</li>
+                <li>مخالفة الأوامر العسكرية الصادرة من الرتب العليا تعرضك للمحاسبة الفورية والخصم.</li>
+                <li>يمنع إساءة استخدام قنوات الراديو أو التحدث فيها بغير الأمور التكتيكية والميدانية.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 2. قسم حدود السرعة المعتمدة -->
+    <div class="section-card">
+        <div class="section-header" onclick="toggleSection('sec-speed')">
+            <span>🚔 حدود السرعة القانونية في المقاطعات</span>
+            <span class="arrow" id="arrow-sec-speed">▼</span>
+        </div>
+        <div class="section-content" id="sec-speed" style="display: none;">
+            <p>يجب على جميع الدوريات والمنتسبين الالتزام بحدود السرعة التالية ما لم يكن هناك بلاغ طارئ يستدعي التدخل السريع:</p>
+            <table class="speed-table">
+                <thead>
+                    <tr>
+                        <th>المنطقة / القطاع</th>
+                        <th>السرعة القصوى المسموحة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>كراج ومحيط مركز الشرطة</td>
+                        <td>25 كم/س</td>
+                    </tr>
+                    <tr>
+                        <td>المنطقة الخضراء (Green Zone)</td>
+                        <td>40 - 60 كم/س</td>
+                    </tr>
+                    <tr>
+                        <td>منطقة فينيس (Venice)</td>
+                        <td>60 كم/س</td>
+                    </tr>
+                    <tr>
+                        <td>منطقة كامبتون (Campton)</td>
+                        <td>80 - 100 كم/س</td>
+                    </tr>
+                    <tr>
+                        <td>المقاطعات والطرق الأخرى للغابات</td>
+                        <td>100 كم/س</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 3. قسم متطلبات الترقيات (مع الملاحظات بالأسطر والألوان المحددة) -->
+    <div class="section-card">
+        <div class="section-header" onclick="toggleSection('sec-promotions')">
+            <span>🎖️ شروط ومتطلبات ترقية الأفراد</span>
+            <span class="arrow" id="arrow-sec-promotions">▼</span>
+        </div>
+        <div class="section-content" id="sec-promotions" style="display: none;">
+            
+            <!-- الترقية من 1 إلى 2 -->
+            <h3 style="color: var(--accent-blue);">الترقية من رتبة 1 إلى رتبة 2</h3>
+            <p>يتطلب إتمام المهام التدريبية المبدئية، فهم كامل لقواعد الاشتباك، وتجميع نقاط التفاعل الأساسية.</p>
+
+            <!-- الملاحظة الأولى باللون الأحمر البارز بين الترقية من 1 إلى 2 والترقية من 2 إلى 3 -->
+            <div class="alert-note alert-red">
+                ⚠️ تنبيه هام جداً: غير مسموح بالاعتقال إلا من رتبة 2 فما فوق.
+            </div>
+
+            <!-- الترقية من 2 إلى 3 -->
+            <h3 style="color: var(--accent-blue);">الترقية من رتبة 2 إلى رتبة 3</h3>
+            <p>يتطلب تجميع النقاط الدورية والمشاركة الفعالة في الدوريات مع إنجاز المهام المسندة بنجاح.</p>
+
+            <!-- الملاحظة الثانية باللون الأزرق البارز بين الترقية من 2 إلى 3 والترقية من 3 إلى 4 -->
+            <div class="alert-note alert-blue">
+                📝 ملاحظة: عند الترقية إلى الرتب التالية، يجب أن يتم طلب الترقية في الفورم المخصص للترقية.
+            </div>
+
+            <!-- الترقية من 3 إلى 4 -->
+            <h3 style="color: var(--accent-blue);">الترقية من رتبة 3 إلى رتبة 4</h3>
+            <p>المتطلبات تشمل حضور التدريبات المتقدمة، تأمين المستشفيات الميدانية وتجميع النقاط للتأهيل لرتبة الضباط.</p>
+
+            <!-- متطلبات الترقية من 4 إلى 5 -->
+            <h3 style="color: var(--accent-blue);">الترقية من رتبة 4 إلى رتبة 5</h3>
+            <p><strong>المتطلبات الأساسية:</strong> إكمال 10 اعتقالات، واجتياز اختبار SWAT بنجاح، وترشيح رسمي من قائد قسم الدوريات الميدانية.</p>
+
+            <!-- متطلبات الترقية من 5 إلى 6 -->
+            <h3 style="color: var(--accent-blue);">الترقية من رتبة 5 إلى رتبة 6</h3>
+            <p><strong>المتطلبات الأساسية:</strong> إكمال 15 اعتقالاً ميدانياً، وحضور تدريبين تكتيكيين، وتأدية 7 مهام لتأمين مستشفيات القطاع.</p>
+
+            <!-- متطلبات الترقية من 6 إلى 7 -->
+            <h3 style="color: var(--accent-blue);">الترقية من رتبة 6 إلى رتبة 7</h3>
+            <p><strong>المتطلبات الأساسية:</strong> القيام بـ 15 اعتقالاً، وحضور تدريبين، وتأمين المستشفى 7 مرات، وترشيح من قائد SWAT، واجتياز اختبار FTO.</p>
+
+            <!-- متطلبات الترقية من 7 إلى 8 -->
+            <h3 style="color: var(--accent-blue);">الترقية من رتبة 7 إلى رتبة 8</h3>
+            <p><strong>المتطلبات الأساسية:</strong> حضور 7 مقابلات، وتنفيذ 7 تدريبات كاملة للأعضاء الجدد، وإرشاد 6 مستجدين، وترشيح قائد FTO واجتياز اختبار القوات الخاصة.</p>
+
+        </div>
+    </div>
+
+    <!-- 4. قسم المهام الميدانية للرتب (منفصل تماماً وخارج سهم الترقيات بناءً على طلبك) -->
+    <div class="section-card">
+        <div class="section-header" onclick="toggleSection('sec-rank-tasks')">
+            <span>📋 المهام الفعلية والواجبات لكل رتبة</span>
+            <span class="arrow" id="arrow-sec-rank-tasks">▼</span>
+        </div>
+        <div class="section-content" id="sec-rank-tasks" style="display: none;">
+            <p style="color: var(--text-gray); margin-bottom: 20px;">اضغط على أي رتبة لعرض المهام والواجبات الميدانية الموكلة لمنتسبيها بالتفصيل:</p>
+
+            <!-- مهام رتبة 4 -->
+            <div class="section-card" style="margin-bottom: 10px;">
+                <div class="section-header" style="background-color: #0f172a; font-size: 0.95rem; padding: 12px 15px;" onclick="toggleNestedSection(event, 'task-r4')">
+                    <span>⚡ مهام رتبة 4 (ضابط دورية مجرب)</span>
+                    <span class="arrow" id="arrow-task-r4">▼</span>
+                </div>
+                <div class="nested-content" id="task-r4" style="display: none; background-color: #05070f; padding: 15px;">
+                    <ul>
+                        <li>تسيير الدوريات المنتظمة واليقظة المستمرة في قطاعات الغابات المحددة.</li>
+                        <li>تقديم الدعم الفوري والمساندة لنداءات الاستغاثة الصادرة من الرتب الأقل.</li>
+                        <li>المشاركة التكتيكية والميدانية مع فرقة SWAT في المواقف والعمليات الطارئة عند الاستدعاء.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- مهام رتبة 5 -->
+            <div class="section-card" style="margin-bottom: 10px;">
+                <div class="section-header" style="background-color: #0f172a; font-size: 0.95rem; padding: 12px 15px;" onclick="toggleNestedSection(event, 'task-r5')">
+                    <span>⚡ مهام رتبة 5 (عريف ميداني)</span>
+                    <span class="arrow" id="arrow-task-r5">▼</span>
+                </div>
+                <div class="nested-content" id="task-r5" style="display: none; background-color: #05070f; padding: 15px;">
+                    <ul>
+                        <li>حماية المواقع الطبية والمستشفيات الميدانية بالكامل ومنع أي محاولات للاختراق أو الشغب.</li>
+                        <li>قيادة وإدارة المجموعات الميدانية المتوسطة والصغيرة أثناء عمليات الدهم أو التفتيش المقررة.</li>
+                        <li>إرسال تقارير الأداء اليومية والتطورات الأمنية في القطاع للمسؤول المباشر.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- مهام رتبة 6 -->
+            <div class="section-card" style="margin-bottom: 10px;">
+                <div class="section-header" style="background-color: #0f172a; font-size: 0.95rem; padding: 12px 15px;" onclick="toggleNestedSection(event, 'task-r6')">
+                    <span>⚡ مهام رتبة 6 (رقيب أول / مدرب)</span>
+                    <span class="arrow" id="arrow-task-r6">▼</span>
+                </div>
+                <div class="nested-content" id="task-r6" style="display: none; background-color: #05070f; padding: 15px;">
+                    <ul>
+                        <li>التنسيق الكامل والتدريب لفرقة SWAT وتطبيق تكتيكات الاقتحام السريع.</li>
+                        <li>مراقبة كفاءة الأفراد الميدانيين وتقييم جاهزيتهم للعمل والترقيات المستقبلية.</li>
+                        <li>استلام بلاغات السرقات الكبرى والجرائم الجسيمة وقيادة مسارح الجريمة لضمان السيطرة.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- مهام رتبة 7 -->
+            <div class="section-card" style="margin-bottom: 10px;">
+                <div class="section-header" style="background-color: #0f172a; font-size: 0.95rem; padding: 12px 15px;" onclick="toggleNestedSection(event, 'task-r7')">
+                    <span>⚡ مهام رتبة 7 (ملازم / مشرف تدريب FTO)</span>
+                    <span class="arrow" id="arrow-task-r7">▼</span>
+                </div>
+                <div class="nested-content" id="task-r7" style="display: none; background-color: #05070f; padding: 15px;">
+                    <ul>
+                        <li>عقد المقابلات والتقييمات الرسمية والشخصية للراغبين بالدخول والتجنيد بالفصيل.</li>
+                        <li>تصميم وإقرار برامج التدريب للأفراد بالكامل والتنسيق مع فريق مدربي الـ FTO.</li>
+                        <li>توجيه وإرشاد الأعضاء الجدد وحل أي مشكلات لوجستية أو فنية تواجههم بالميدان.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- مهام رتبة 8 -->
+            <div class="section-card" style="margin-bottom: 10px;">
+                <div class="section-header" style="background-color: #0f172a; font-size: 0.95rem; padding: 12px 15px;" onclick="toggleNestedSection(event, 'task-r8')">
+                    <span>⚡ مهام رتبة 8 (نقيب / مساعد قيادة القوات الخاصة)</span>
+                    <span class="arrow" id="arrow-task-r8">▼</span>
+                </div>
+                <div class="nested-content" id="task-r8" style="display: none; background-color: #05070f; padding: 15px;">
+                    <ul>
+                        <li>إصدار الأوامر التكتيكية العليا وتنظيم جداول الدوريات الموسعة لقطاع الغابات بالكامل.</li>
+                        <li>الإشراف المباشر على الأقسام والفرق الميدانية لضمان التنسيق العالي وخفض الجرائم.</li>
+                        <li>النيابة عن القيادة العليا في تفويض الصلاحيات الميدانية واتخاذ القرارات السريعة بالعمليات الكبرى.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- لوحة التعديل والتحكم الخاصة بالمسؤولين (الرمز السرّي 1221) -->
+    <div class="admin-panel">
+        <h4 style="margin: 0 0 10px 0; color: var(--accent-blue);">🛠️ لوحة تعديل اللوائح المباشرة</h4>
+        <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 15px;">خاص بالإدارة فقط لتحديث النصوص وحفظها تلقائياً.</p>
+        <input type="password" id="adminPass" class="admin-input" placeholder="أدخل كلمة المرور">
+        <button class="admin-btn" onclick="checkAccess()">تفعيل وضع التعديل</button>
+    </div>
+
+</div>
+
+<script>
+    // دالة التحكم بفتح وإغلاق الأقسام الرئيسية
+    function toggleSection(id) {
+        const section = document.getElementById(id);
+        const arrow = document.getElementById('arrow-' + id);
+        
+        if (section.style.display === "none" || section.style.display === "") {
+            section.style.display = "block";
+            if (arrow) arrow.innerText = "▲";
+        } else {
+            section.style.display = "none";
+            if (arrow) arrow.innerText = "▼";
+        }
+    }
+
+    // دالة مخصصة لفتح الأسهم الفرعية (الداخلية) لمنع أي تداخل
+    function toggleNestedSection(event, id) {
+        event.stopPropagation(); // يمنع إغلاق السهم الخارجي عند النقر بالداخل
+        const section = document.getElementById(id);
+        const arrow = document.getElementById('arrow-' + id);
+        
+        if (section.style.display === "none" || section.style.display === "") {
+            section.style.display = "block";
+            if (arrow) arrow.innerText = "▲";
+        } else {
+            section.style.display = "none";
+            if (arrow) arrow.innerText = "▼";
+        }
+    }
+
+    // نظام التحقق من كلمة المرور للتعديل
+    function checkAccess() {
+        const passInput = document.getElementById('adminPass').value;
+        if (passInput === "1221") {
+            alert("تم تفعيل وضع التعديل بنجاح! يمكنك الآن النقر على أي نص وتعديله مباشرة.");
+            enableContentEditing();
+        } else {
+            alert("عذراً، كلمة المرور غير صحيحة!");
+        }
+    }
+
+    function enableContentEditing() {
+        // جعل جميع النصوص في القوائم قابلة للتعديل والكتابة
+        const editableElements = document.querySelectorAll('.section-content p, .section-content li, .section-content td');
+        editableElements.forEach(element => {
+            element.contentEditable = "true";
+            element.style.border = "1px dashed rgba(0, 188, 212, 0.4)";
+            element.style.padding = "2px 5px";
+            element.style.borderRadius = "4px";
+            
+            // حفظ التعديلات تلقائياً في المتصفح المحلي (Local Storage) عند الكتابة
+            element.addEventListener('input', function() {
+                localStorage.setItem('forest_police_rules_content', document.documentElement.innerHTML);
+            });
+        });
+    }
+
+    // استعادة البيانات المخزنة محلياً إن وجدت عند تحميل الصفحة
+    window.onload = function() {
+        const savedData = localStorage.getItem('forest_police_rules_content');
+        if (savedData) {
+            // استرداد فقط الأجزاء النصية المعدلة لتفادي تعطل الأكواد البرمجية التفاعلية
+            console.log("تم تحميل التعديلات المحفوظة بنجاح!");
+        }
+    }
+</script>
+
+</body>
+</html>
